@@ -1,0 +1,30 @@
+{
+  "name": "php-nexus-app",
+  "version": "1.0.0",
+  "main": "",
+  "scripts": {
+    "dev": "concurrently \"npm run php\" \"npm run browsersync\"",
+    "php": "nodemon --watch src --exec \"php -S localhost:8000 -t src\" -e php",
+    "browsersync": "browser-sync start --proxy \"localhost:8000\" --files \"src/**/*.{php,html,css,js}\"",
+    "prisma": "npx prisma",
+    "prisma:format": "npx prisma format && node ./scripts/gen-prisma.js",
+    "prisma:generate": "npx prisma generate && node ./scripts/gen-prisma.js",
+    "prisma:db-push": "npx prisma db push && node ./scripts/gen-prisma.js",
+    "prisma:migrate": "npx prisma migrate dev --name init && node ./scripts/gen-prisma.js",
+    "prisma:sync": "npx prisma migrate deploy",
+    "prisma:seed": "npx prisma db seed",
+    "prisma:studio": "npx prisma studio"
+  },
+  "author": "ChyDev",
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "concurrently": "^9.1.0",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "browser-sync": "^3.0.3",
+    "nodemon": "^3.1.7",
+    "prisma": "^5.22.0"
+  }
+}
