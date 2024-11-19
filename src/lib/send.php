@@ -1,9 +1,7 @@
 <?php
 
-function send($data, $httpResponseCode)
+function send($data)
 {
-    header('Content-Type: application/json');
-    http_response_code($httpResponseCode);
     echo json_encode($data);
     exit;
 }
