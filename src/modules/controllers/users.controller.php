@@ -1,15 +1,15 @@
 <?php
 
 require_once __DIR__ . '/../../lib/send.php';
-require_once __DIR__ . '/../services/services.php';
+require_once __DIR__ . '/../services/users.services.php';
 
-class controller
+class UserController
 {
     // USER
     public static function getAllUsers()
     {
         try {
-            $data = service::getAllUsers();
+            $data = UserService::getAllUsers();
             send($data);
         } catch (Exception $e) {
             send(['error' => 'Failed to get all users', 'details' => $e->getMessage()]);
@@ -24,7 +24,7 @@ class controller
         }
 
         try {
-            $data = service::getUserById($id);
+            $data = UserService::getUserById($id);
             if (!$data) {
                 send(['error' => 'User not found']);
             } else {
@@ -32,32 +32,6 @@ class controller
             }
         } catch (Exception $e) {
             send(['error' => 'Failed to get user', 'details' => $e->getMessage()]);
-        }
-    }
-
-    public static function createUser()
-    {
-        $input = json_decode(file_get_contents('php://input'), true);
-
-        error_log('Input received for createUser: ' . json_encode($input));
-
-        if (
-            !$input || !isset($input['name']) || !isset($input['email'])
-        ) {
-            send(['error' => 'Name and Email are required']);
-            return;
-        }
-
-        if (isset($input['role_id']) && !is_numeric($input['role_id'])) {
-            send(['error' => 'Invalid role_id']);
-            return;
-        }
-
-        try {
-            $data = service::createUser($input);
-            send(['success' => true, 'user' => $data]);
-        } catch (Exception $e) {
-            send(['error' => 'Failed to create user', 'details' => $e->getMessage()]);
         }
     }
 
@@ -77,7 +51,7 @@ class controller
         }
 
         try {
-            $data = service::updateUser($id, $input);
+            $data = UserService::updateUser($id, $input);
             if ($data === 0) {
                 send(['message' => 'No changes made or user not found']);
             } else {
@@ -96,7 +70,7 @@ class controller
         }
 
         try {
-            $data = service::deleteUser($id);
+            $data = UserService::deleteUser($id);
             if ($data === 0) {
                 send(['error' => 'User not found']);
             } else {
@@ -111,7 +85,7 @@ class controller
     public static function getAllRoles()
     {
         try {
-            $data = service::getAllRoles();
+            $data = UserService::getAllRoles();
             send($data);
         } catch (Exception $e) {
             send(['error' => 'Failed to get all roles', 'details' => $e->getMessage()]);
@@ -126,7 +100,7 @@ class controller
         }
 
         try {
-            $data = service::getRoleById($id);
+            $data = UserService::getRoleById($id);
             if (!$data) {
                 send(['error' => 'Role not found']);
             } else {
@@ -151,7 +125,7 @@ class controller
         }
 
         try {
-            $data = service::createRole($input);
+            $data = UserService::createRole($input);
             send(['success' => true, 'role' => $data]);
         } catch (Exception $e) {
             send(['error' => 'Failed to create role', 'details' => $e->getMessage()]);
@@ -174,7 +148,7 @@ class controller
         }
 
         try {
-            $data = service::updateRole($id, $input);
+            $data = UserService::updateRole($id, $input);
             if ($data === 0) {
                 send(['message' => 'No changes made or role not found']);
             } else {
@@ -193,7 +167,7 @@ class controller
         }
 
         try {
-            $data = service::deleteRole($id);
+            $data = UserService::deleteRole($id);
             if ($data === 0) {
                 send(['error' => 'Role not found']);
             } else {

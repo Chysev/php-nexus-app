@@ -3,7 +3,9 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/./lib/prisma.php';
 require_once __DIR__ . '/./modules/routes/routes.php';
-require_once __DIR__ . '/./modules/services/services.php';
+require_once __DIR__ . '/./modules/services/auth.services.php';
+require_once __DIR__ . '/./modules/services/users.services.php';
+
 
 use Dotenv\Dotenv;
 
@@ -16,5 +18,6 @@ $prisma = new Prisma(
     $_ENV['DB_PASSWORD']
 );
 
-service::init($prisma);
+AuthService::init($prisma);
+UserService::init($prisma);
 routes::handleRoutes();

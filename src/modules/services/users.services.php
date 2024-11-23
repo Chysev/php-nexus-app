@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../../lib/prisma.php';
 
-class service
+class UserService
 {
     private static $prisma;
 
@@ -20,22 +20,6 @@ class service
     public static function getUserById($id)
     {
         return self::$prisma->findUniqueUser(['id' => $id]);
-    }
-
-    public static function createUser($data)
-    {
-        $body = [
-            'name' => $data['name'],
-            'email' => $data['email']
-        ];
-
-        if (isset($data['role_id'])) {
-            $body['role_id'] = $data['role_id'];
-        }
-
-        error_log('Body for createUser: ' . json_encode($body));
-
-        return self::$prisma->createUser($body);
     }
 
 

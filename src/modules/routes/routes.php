@@ -1,7 +1,8 @@
 <?php
 
-require_once __DIR__ . '/../services/services.php';
-require_once __DIR__ . '/../controllers/controller.php';
+// require_once __DIR__ . '/../services/services.php';
+require_once __DIR__ . '/../controllers/users.controller.php';
+require_once __DIR__ . '/../controllers/auth.controller.php';
 
 class routes
 {
@@ -15,18 +16,22 @@ class routes
             ['GET', '/', __DIR__ . '/../pages/index.php'],
 
             // User API Endpoints
-            ['GET', '/api/users', [controller::class, 'getAllUsers']],
-            ['GET', '/api/user/{id}', [controller::class, 'getUserById']],
-            ['POST', '/api/users', [controller::class, 'createUser']],
-            ['PATCH', '/api/users/{id}', [controller::class, 'updateUser']],
-            ['DELETE', '/api/users/{id}', [controller::class, 'deleteUser']],
+            ['GET', '/api/users', [UserController::class, 'getAllUsers']],
+            ['GET', '/api/user/{id}', [UserController::class, 'getUserById']],
+            ['PATCH', '/api/user/{id}', [UserController::class, 'updateUser']],
+            ['DELETE', '/api/user/{id}', [UserController::class, 'deleteUser']],
+
+            // Auth API Endpoints
+            ['POST', '/api/login', [AuthController::class, 'login']],
+            ['POST', '/api/register', [AuthController::class, 'register']],
+            ['GET', '/api/session', [AuthController::class, 'session']],
 
             // Role API Endpoints
-            ['GET', '/api/roles', [controller::class, 'getAllRoles']],
-            ['GET', '/api/role/{id}', [controller::class, 'getRoleById']],
-            ['POST', '/api/roles', [controller::class, 'createRole']],
-            ['PATCH', '/api/roles/{id}', [controller::class, 'updateRole']],
-            ['DELETE', '/api/roles/{id}', [controller::class, 'deleteRole']],
+            ['GET', '/api/roles', [UserController::class, 'getAllRoles']],
+            ['GET', '/api/role/{id}', [UserController::class, 'getRoleById']],
+            ['POST', '/api/roles', [UserController::class, 'createRole']],
+            ['PATCH', '/api/roles/{id}', [UserController::class, 'updateRole']],
+            ['DELETE', '/api/roles/{id}', [UserController::class, 'deleteRole']],
         ];
 
 
